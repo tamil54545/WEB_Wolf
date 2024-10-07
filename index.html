@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="styles.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Call Counter-CYBER-WOLF</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #000; /* Dark background */
+            color: #00ff00; /* Green text color */
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            position: relative; /* Needed for absolute positioning of background */
+        }
+        .container {
+            background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5); /* Glowing effect */
+            width: 80%;
+            margin: 50px auto;
+            position: relative;
+            z-index: 1; /* Ensure container is above background */
+        }
+        input {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            background-color: #222; /* Dark input background */
+            color: #00ff00; /* Green text color */
+            border: 1px solid #00ff00; /* Green border */
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            background-color: #111; /* Dark background for table */
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+            color: #00ff00; /* Green text color for table */
+        }
+        th {
+            background-color: #222; /* Dark background for header */
+        }
+        /* Animated gradient background */
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        #background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(270deg, #0f0, #00ff00, #00cc00, #009900);
+            background-size: 400% 400%;
+            animation: gradientAnimation 1s ease infinite; /* Smooth transition */
+            z-index: 0; /* Send to back */
+        }
+        /* Matrix rain effect */
+        .matrix {
+            position: absolute;
+            color: #030703;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: nowrap;
+            overflow: hidden;
+            opacity: 0.7;
+            animation: matrixRain 1s linear infinite; /* Move downwards */
+        }
+        @keyframes matrixRain {
+            to { transform: translateY(10vh); }
+        }
+        @keyframes matrixFade {
+            0% { opacity: 111; }
+            100% { opacity: 100; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="background"></div> <!-- Background layer -->
+
+<div class="container">
+    <h1>Live Mobile Number Call Counter-Hacking Festival-2024 For Cyber Wolf...</h1>
+    <h2 style="text-align: center;">S.Tamilselvan..</h2>
+    <label for="mobileNumber">Enter Mobile Number:</label>
+    <input type="text" id="mobileNumber" placeholder="Enter mobile number" />
+    <button onclick="sendCall()">Add Call</button>
+
+    <h2>Live Call Log</h2>
+    <table id="callLog">
+        <thead>
+            <tr>
+                <th>Mobile Number</th>
+                <th>Call Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Rows will be dynamically added here -->
+        </tbody>
+    </table>
+</div>
+
+<div id="matrix-container"></div> <!-- Matrix rain container -->
+
+<script>
+    let ws;
+
+    // Connect to the WebSocket server
+    function connectWebSocket() {
+        ws = new WebSocket('ws://localhost:8080'); // Connect to the WebSocket server
+        
+        ws.onmessage = function(event) {
+            const callData = JSON.parse(event.data);
+            updateTable(callData);
+        };
+
+        ws.onopen = function() {
+            console.log('Connected to WebSocket server');
+        };
+
+        ws.onclose = function() {
+            console.log('WebSocket connection closed. Reconnecting...');
+            setTimeout(connectWebSocket, 1000); // Try reconnecting every second if connection is closed
+        };
+    }
+
+    // Send a mobile number to the WebSocket server
+    function sendCall() {
+        const mobileNumber = document.getElementById('mobileNumber').value;
+
+        if (!mobileNumber || isNaN(mobileNumber)) {
+            alert('Please enter a valid mobile number.');
+            return;
+        }
+
+        ws.send(mobileNumber); // Send the mobile number to the WebSocket server
+        document.getElementById('mobileNumber').value = ''; // Clear input
+    }
+
+    // Update the table with live call data
+    function updateTable(callData) {
+        const tbody = document.querySelector('#callLog tbody');
+        tbody.innerHTML = ''; // Clear previous table rows
+
+        for (const number in callData) {
+            const row = document.createElement('tr');
+            const numberCell = document.createElement('td');
+            numberCell.textContent = number;
+            const countCell = document.createElement('td');
+            countCell.textContent = callData[number];
+            row.appendChild(numberCell);
+            row.appendChild(countCell);
+            tbody.appendChild(row);
+        }
+    }
+
+    // Matrix rain effect
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXY@#$%%^^*l&^%$##@@@@Z0123456789ABCDEFGHIJ';
+    setInterval(() => {
+        const char = chars[Math.floor(Math.random() * chars.length)];
+        const span = document.createElement('span');
+        span.textContent = char;
+        span.classList.add('matrix');
+        span.style.left = Math.random() * 100 + 'vw'; // Random horizontal position
+        document.getElementById('matrix-container').appendChild(span);
+        setTimeout(() => {
+            span.remove();
+        }, 5000); // Adjust this for how long each character stays visible
+    }, 100);
+
+    // Initialize WebSocket connection
+    connectWebSocket();
+</script>
+
+</body>
+</html>

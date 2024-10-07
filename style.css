@@ -1,0 +1,102 @@
+body {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #000; /* Dark background */
+    color: #00ff00; /* Green text color */
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    position: relative; /* Needed for absolute positioning of background */
+}
+
+.container {
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.5); /* Glowing effect */
+    width: 80%;
+    margin: 50px auto;
+    position: relative;
+    z-index: 1; /* Ensure container is above background */
+}
+
+input {
+    margin: 10px 0;
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    background-color: #222; /* Dark input background */
+    color: #00ff00; /* Green text color */
+    border: 1px solid #00ff00; /* Green border */
+    border-radius: 4px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    background-color: #111; /* Dark background for table */
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+    color: #00ff00; /* Green text color for table */
+}
+
+th {
+    background-color: #222; /* Dark background for header */
+}
+
+/* Animated gradient background */
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+#background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(270deg, #0f0, #00ff00, #00cc00, #009900);
+    background-size: 400% 400%;
+    animation: gradientAnimation 15s ease infinite; /* Smooth transition */
+    z-index: 0; /* Send to back */
+}
+
+/* Matrix rain effect */
+.matrix {
+    position: absolute;
+    color: #00ff00;
+    font-family: 'Courier New', Courier, monospace;
+    white-space: nowrap;
+    overflow: hidden;
+    opacity: 0.7;
+    animation: matrixRain 5s linear infinite; /* Move downwards */
+}
+
+@keyframes matrixRain {
+    to { transform: translateY(100vh); }
+}
+
+@keyframes matrixFade {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
